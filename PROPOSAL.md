@@ -35,6 +35,7 @@ Arrays to organize things
 
 What algorithms and /or data structures you will be using, and how.
 I plan to use a simple escape time algorithm for the mandelbrot set.
+Probably going to use some sort of bitmap image format and a bitmap file struct to manipulate it.
 
 # Intended pacing:
 
@@ -43,5 +44,5 @@ A timeline with expected completion dates of parts of the project.
 1/10 - Get a working version that can render the mandelbrot set into an image file without any optimizations
 1/14 - Use forks to split the work and write into separate parts of the file
 1/20 - try to implement distributed computing along with forks to speed up the work
-1/21 (8AM) - everything commited including video
+1/21 (8AM) - everything committed including video
 extra time: work on the colors in the picture and also take parameters for details / zoom
