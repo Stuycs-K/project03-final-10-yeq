@@ -3,13 +3,13 @@
 
 ### GROUP NAME HERE
 
-Group Members Here
-       
+Qiuyu (Leo) Ye
+
 ### Project Description:
 
-Explain what is this project.
-  
+Using processes and distributed computing in order to render a picture of the mandelbrot set
+
 ### Instructions:
 
-How does the user install/compile/run the program.
-How does the user interact with this program?
+make run
+open an image file with the rendered picture
