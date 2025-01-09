@@ -13,3 +13,6 @@ Absent
 ### 2024-01-08 - Brief description
 Absent
 Researched bmp file format and started working on the basic implementation.
+
+### 2024-01-09 - Brief description
+added the basic escape time algorithm as a function
