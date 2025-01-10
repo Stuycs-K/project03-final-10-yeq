@@ -20,3 +20,5 @@ started working on a ppm file. added header in class.
 
 finished getting a basic rendering of the mandelbrot set into a ppm file.
 The resolution of the file can be easily changed with one number and the number of iterations can also be easily adjusted
+
+### 2024-01-10 - Brief description
