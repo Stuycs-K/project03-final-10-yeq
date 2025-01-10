@@ -22,3 +22,4 @@ finished getting a basic rendering of the mandelbrot set into a ppm file.
 The resolution of the file can be easily changed with one number and the number of iterations can also be easily adjusted
 
 ### 2024-01-10 - Brief description
+added plans going forward and working on implementing forking and shared memory.

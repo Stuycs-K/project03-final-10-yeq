@@ -59,34 +59,43 @@ int main(){
   write(fd, buff, sizeof(buff));
   //number of children
   //use that index in a loop to give segments and memory address.
-  for (int i = 0; i < pixels; i++){
-    y += 3.0/pixels;
-    x = -2;
-    // printf("%Lf\n", x);
-    for (int j = 0; j < pixels; j++){
-      if (i == pixels - 1 && j == pixels - 1){
-        break;
-      }
-      x += 3.0/pixels;
-      if ((n = escape(x, y)) >= 0){
-        // printf("%d\n", n);
-        write(fd, "255 255 255 ", 13);
-      }
-      else{
-        // printf("%d\n", n);
-        write(fd, "0 0 0 ", 7);
-      }
+  int num_child = 4;
+  pid_t p = -1;
+  double start = 0.0;
+  double end = 0.0;
+  double temp = pixels;
+  for (int i = 1; i <= num_child; i++){
+    if (p){
+      end = i * temp/num_child;
+      printf("end: %f\n", end);
+      p = fork();
     }
+    start += temp/num_child;
+    printf("start: %f\n", start);
   }
-  y += 3.0/pixels;
-  if ((n = escape(x, y)) >= 0){
-    // printf("%d\n", n);
-    write(fd, "255 255 255", 12);
-  }
-  else{
-    // printf("%d\n", n);
-    write(fd, "0 0 0", 6);
-  }
+  // for (int i = 0; i < pixels; i++){
+  //   y += 3.0/pixels;
+  //   x = -2;
+  //   for (int j = 0; j < pixels; j++){
+  //     if (i == pixels - 1 && j == pixels - 1){
+  //       break;
+  //     }
+  //     x += 3.0/pixels;
+  //     if ((n = escape(x, y)) >= 0){
+  //       write(fd, "255 255 255 ", 13);
+  //     }
+  //     else{
+  //       write(fd, "0 0 0 ", 7);
+  //     }
+  //   }
+  // }
+  // y += 3.0/pixels;
+  // if ((n = escape(x, y)) >= 0){
+  //   write(fd, "255 255 255", 12);
+  // }
+  // else{
+  //   write(fd, "0 0 0", 6);
+  // }
 }
 
 
