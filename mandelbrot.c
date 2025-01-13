@@ -68,7 +68,7 @@ int main(){
   for (int i = 1; i <= num_child; i++){
     if (p){
       end = i * temp/num_child;
-      id = i;
+      id = i - 1;
       p = fork();
     }
     start = end - temp/num_child;
@@ -84,6 +84,13 @@ int main(){
   if (p == 0){
     printf("%d\n", id);
     printf("%f %f\n", start, end);
+    char f[10];
+    sprintf(f, "%d.ppm", id);
+    fd = open(f, O_WRONLY| O_TRUNC | O_CREAT, 0644);
+    int a = end - start;
+    printf("%d\n", a);
+    sprintf(buff, "P3 %d %d 255\n", a, a);
+    write(fd, buff, sizeof(buff));
     for (int i = start; i < end; i++){
       y = i * 3.0/pixels;
       x = -2;
