@@ -64,15 +64,21 @@ int main(){
   double start = 0.0;
   double end = 0.0;
   double temp = pixels;
+  int id = -1;
   for (int i = 1; i <= num_child; i++){
     if (p){
       end = i * temp/num_child;
-      printf("end: %f\n", end);
+      id = i;
       p = fork();
     }
-    start += temp/num_child;
-    printf("start: %f\n", start);
+    start = end - temp/num_child;
   }
+  if (p != 0){
+    id = -1;
+  }
+  printf("%d\n", id);
+  printf("start: %f\n", start);
+  printf("end: %f\n", end);
   // for (int i = 0; i < pixels; i++){
   //   y += 3.0/pixels;
   //   x = -2;
