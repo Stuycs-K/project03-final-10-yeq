@@ -75,34 +75,71 @@ int main(){
   }
   if (p != 0){
     id = -1;
+    start = -1;
+    end = -1;
   }
-  printf("%d\n", id);
-  printf("start: %f\n", start);
-  printf("end: %f\n", end);
-  // for (int i = 0; i < pixels; i++){
-  //   y += 3.0/pixels;
-  //   x = -2;
-  //   for (int j = 0; j < pixels; j++){
-  //     if (i == pixels - 1 && j == pixels - 1){
-  //       break;
-  //     }
-  //     x += 3.0/pixels;
-  //     if ((n = escape(x, y)) >= 0){
-  //       write(fd, "255 255 255 ", 13);
-  //     }
-  //     else{
-  //       write(fd, "0 0 0 ", 7);
-  //     }
-  //   }
-  // }
-  // y += 3.0/pixels;
-  // if ((n = escape(x, y)) >= 0){
-  //   write(fd, "255 255 255", 12);
-  // }
-  // else{
-  //   write(fd, "0 0 0", 6);
-  // }
+  // printf("%d\n", id);
+  // printf("start: %f\n", start);
+  // printf("end: %f\n", end);
+  if (p == 0){
+    printf("%d\n", id);
+    printf("%f %f\n", start, end);
+    for (int i = start; i < end; i++){
+      y = i * 3.0/pixels;
+      x = -2;
+      for (int j = 0; j < pixels; j++){
+        if (i == end - 1 && j == pixels - 1){
+          printf("%d, %d\n", i, j);
+          break;
+        }
+        x += 3.0/pixels;
+        if ((n = escape(x, y)) >= 0){
+          write(fd, "255 255 255 ", 13);
+        }
+        else{
+          write(fd, "0 0 0 ", 7);
+        }
+      }
+    }
+    y += 3.0/pixels;
+    if ((n = escape(x, y)) >= 0){
+      write(fd, "255 255 255", 12);
+    }
+    else{
+      write(fd, "0 0 0", 6);
+    }
+  }
 }
+
+
+
+//original working code
+
+// for (int i = 0; i < pixels; i++){
+//   y += 3.0/pixels;
+//   x = -2;
+//   for (int j = 0; j < pixels; j++){
+//     if (i == pixels - 1 && j == pixels - 1){
+//       break;
+//     }
+//     x += 3.0/pixels;
+//     if ((n = escape(x, y)) >= 0){
+//       write(fd, "255 255 255 ", 13);
+//     }
+//     else{
+//       write(fd, "0 0 0 ", 7);
+//     }
+//   }
+// }
+// y += 3.0/pixels;
+// if ((n = escape(x, y)) >= 0){
+//   write(fd, "255 255 255", 12);
+// }
+// else{
+//   write(fd, "0 0 0", 6);
+// }
+
+//
 
 
 //forking

@@ -23,3 +23,6 @@ The resolution of the file can be easily changed with one number and the number 
 
 ### 2024-01-10 - Brief description
 added plans going forward and working on implementing forking and shared memory.
+
+### 2024-01-13 - Brief description
+working on having the forks calculate each of their designated sections. 3 pixels are missing out of the total required amount of pixels for the ppm.
