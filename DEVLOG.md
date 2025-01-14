@@ -27,3 +27,6 @@ added plans going forward and working on implementing forking and shared memory.
 ### 2024-01-13 - Brief description
 working on having the forks calculate each of their designated sections. 3 pixels are missing out of the total required amount of pixels for the ppm.
 split into files instead of shared memory for now. split files are working except theres a streak in one of the rows now.
+
+### 2024-01-14 - Brief description
+working on stitching files back together. all the individual files are fine but the combined file has extra pixel data
