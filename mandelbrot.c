@@ -20,7 +20,7 @@ int escape(long double x, long double y){
   long double nX = x;
   long double nY = y;
   int i = 0;
-  while(i < 2500){
+  while(i < 5000){
     // if (fabs(x) > 2 || fabs(y) > 2){
     //   return i;
     // }
@@ -54,12 +54,12 @@ int main(){
   long double x = -2.0; long double y = -1.5;
   int pixels = 900;
   int n = -2;
-  char buff[18];
+  char buff[32] = "";
   sprintf(buff, "P3 %d %d 255\n", pixels, pixels);
   write(fd, buff, sizeof(buff));
   //number of children
   //use that index in a loop to give segments and memory address.
-  int num_child = 4;
+  int num_child = 9;
   pid_t p = -1;
   double start = 0.0;
   double end = 0.0;
@@ -78,34 +78,39 @@ int main(){
     start = -1;
     end = -1;
   }
-  // printf("%d\n", id);
-  // printf("start: %f\n", start);
-  // printf("end: %f\n", end);
+  printf("%d\n", id);
+  printf("start: %f\n", start);
+  printf("end: %f\n", end);
   if (p == 0){
-    printf("%d\n", id);
-    printf("%f %f\n", start, end);
+    // printf("%d\n", id);
+    // printf("%f %f\n", start, end);
     char f[10];
     sprintf(f, "%d.ppm", id);
     fd = open(f, O_WRONLY| O_TRUNC | O_CREAT, 0644);
     int a = end - start;
-    printf("%d\n", a);
-    sprintf(buff, "P3 %d %d 255\n", a, a);
+    // printf("%d\n", a);
+    sprintf(buff, "P3 %d %d 255\n", pixels, a);
+    // printf("%s", buff);
     write(fd, buff, sizeof(buff));
+    y += (3.0/pixels) * start;
+    printf("%Lf\n", y);
     for (int i = start; i < end; i++){
-      y = i * 3.0/pixels;
-      x = -2;
+      // y += 3.0/pixels;
+      // printf("%Lf\n", y);
+      y = -1.5 + i * 3.0/pixels;
+      x = -2.0;
       for (int j = 0; j < pixels; j++){
         if (i == end - 1 && j == pixels - 1){
-          printf("%d, %d\n", i, j);
+          // printf("%d, %d\n", i, j);
           break;
         }
-        x += 3.0/pixels;
         if ((n = escape(x, y)) >= 0){
           write(fd, "255 255 255 ", 13);
         }
         else{
           write(fd, "0 0 0 ", 7);
         }
+        x += 3.0/pixels;
       }
     }
     y += 3.0/pixels;
