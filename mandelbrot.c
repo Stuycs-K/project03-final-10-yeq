@@ -132,14 +132,16 @@ int main(){
 
     char buff[1024] = "";
     int tempfd = -1;
-    // for (int i = 0; i < num_child; i++){
-    int i = 8;
+    struct stat * stat_buffer;
+    for (int i = 0; i < num_child; i++){
+    //stat to read size of file
       sprintf(f, "%d.ppm", i);
+      stat(f, stat_buffer);
       tempfd = open(f, O_RDONLY);
-      while(read(tempfd, buff, sizeof(buff))){
-        write(fd, buff, sizeof(buff));
+      while(read(tempfd, buff, 1024 % stat_buffer->st_size)){
+        write(fd, buff, 1024 % stat_buffer->st_size);
       }
-    // }
+    }
     printf("done\n");
   }
 }
