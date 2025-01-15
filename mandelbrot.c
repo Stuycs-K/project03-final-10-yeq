@@ -7,13 +7,10 @@
 #include <string.h>
 #include <errno.h>
 #include <math.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#define KEY 24601
 
-// struct pixel {
-//   int x;
-//   int y;
-//   int color;
-// };
-//
 
 //take a step size
 int escape(long double x, long double y){
@@ -50,6 +47,14 @@ int escape(long double x, long double y){
 
 //doesnt use any optimizations like reflecting the logistic map across its center axis
 int main(){
+  // char *data[4];
+  // int shmid;
+  // shmid = shmget(KEY, sizeof(int), IPC_CREAT | 0640);
+  // printf("shmid: %d\n", shmid);
+  // data = shmat(shmid, 0, 0);
+  // char * head[4] = data;
+
+
   int fd = open("render.ppm", O_WRONLY| O_TRUNC | O_CREAT, 0644);
   long double x = -2.0; long double y = -1.5;
   // int pixels = 900;
@@ -70,6 +75,7 @@ int main(){
     if (p){
       end = i * temp/num_child;
       id = i - 1;
+      // data =  data + ((end - start) * 3);
       p = fork();
     }
     start = end - temp/num_child;
@@ -107,6 +113,7 @@ int main(){
           break;
         }
         if ((n = escape(x, y)) >= 0){
+          // *data = "255 "
           write(fd, "255 255 255 ", 13);
         }
         else{
@@ -125,25 +132,32 @@ int main(){
       }
     }
   }
-  else{
-    while(wait(NULL) > 0);
-    printf("combining...\n");
-    char f[16];
-
-    char buff[1024] = "";
-    int tempfd = -1;
-    struct stat * stat_buffer;
-    for (int i = 0; i < num_child; i++){
-    //stat to read size of file
-      sprintf(f, "%d.ppm", i);
-      stat(f, stat_buffer);
-      tempfd = open(f, O_RDONLY);
-      while(read(tempfd, buff, 1024 % stat_buffer->st_size)){
-        write(fd, buff, 1024 % stat_buffer->st_size);
-      }
-    }
-    printf("done\n");
-  }
+  // else{
+  //   while(wait(NULL) > 0);
+  //   printf("combining...\n");
+  //   char f[16];
+  //
+  //   // char buff[1024] = "";
+  //   int tempfd = -1;
+  //   struct stat * stat_buffer;
+  //   char * buff;
+  //   char * p;
+  //   for (int i = 0; i < num_child; i++){
+  //     printf("%d\n", i);
+  //   //stat to read size of file
+  //     sprintf(f, "%d.ppm", i);
+  //     stat(f, stat_buffer);
+  //     p = calloc((100), sizeof(char));
+  //     tempfd = open(f, O_RDONLY);
+  //     printf("%d\n", i);
+  //     while(read(tempfd, p, 100)){
+  //       write(fd, p, 100);
+  //       // stat_buffer->st_size
+  //     }
+  //     free(p);
+  //   }
+  //   printf("done\n");
+  // }
 }
 
 

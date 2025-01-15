@@ -30,3 +30,6 @@ split into files instead of shared memory for now. split files are working excep
 
 ### 2024-01-14 - Brief description
 working on stitching files back together. all the individual files are fine but the combined file has extra pixel data
+
+### 2024-01-14 - Brief description
+working on shared memory and fixing bugs
