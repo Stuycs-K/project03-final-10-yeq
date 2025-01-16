@@ -33,3 +33,6 @@ working on stitching files back together. all the individual files are fine but 
 
 ### 2024-01-14 - Brief description
 working on shared memory and fixing bugs
+
+### 2024-01-14 - Brief description
+added leading zeros and worked on fixing errors
