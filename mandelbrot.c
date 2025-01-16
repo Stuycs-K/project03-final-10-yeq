@@ -11,6 +11,8 @@
 #include <sys/shm.h>
 #define KEY 24601
 
+//group id 40
+
 
 //take a step size
 int escape(long double x, long double y){
@@ -55,17 +57,19 @@ int main(){
   // char * head[4] = data;
 
 
+  // int fd = open("render.ppm", O_WRONLY| O_TRUNC | O_CREAT, 0644);
   int fd = open("render.ppm", O_WRONLY| O_TRUNC | O_CREAT, 0644);
   long double x = -2.0; long double y = -1.5;
   // int pixels = 900;
-  int pixels = 9;
+  int pixels = 900;
   int n = -2;
   char buff[32] = "";
   sprintf(buff, "P3 %d %d 255\n", pixels, pixels);
+  // sprintf(buff, "P1 %d %d\n", pixels, pixels);
   write(fd, buff, sizeof(buff));
   //number of children
   //use that index in a loop to give segments and memory address.
-  int num_child = 9;
+  int num_child = 1;
   pid_t p = -1;
   double start = 0.0;
   double end = 0.0;
@@ -113,11 +117,15 @@ int main(){
           break;
         }
         if ((n = escape(x, y)) >= 0){
-          // *data = "255 "
           write(fd, "255 255 255 ", 13);
+          // write(fd, "1 ", 3);
+          // write(fd, "1", 2);
         }
         else{
-          write(fd, "0 0 0 ", 7);
+          // write(fd, "0", 2);
+          // write(fd, "0 ", 3);
+          // write(fd, "0 0 0 ", 7);
+          write(fd, "000 000 000 ", 13);
         }
         x += 3.0/pixels;
       }
@@ -126,38 +134,39 @@ int main(){
       y += 3.0/pixels;
       if ((n = escape(x, y)) >= 0){
         write(fd, "255 255 255", 12);
+        // write(fd, "1", 2);
       }
       else{
-        write(fd, "0 0 0", 6);
+        // write(fd, "0", 2);
+        write(fd, "000 000 000", 12);
       }
     }
   }
-  // else{
-  //   while(wait(NULL) > 0);
-  //   printf("combining...\n");
-  //   char f[16];
-  //
-  //   // char buff[1024] = "";
-  //   int tempfd = -1;
-  //   struct stat * stat_buffer;
-  //   char * buff;
-  //   char * p;
-  //   for (int i = 0; i < num_child; i++){
-  //     printf("%d\n", i);
-  //   //stat to read size of file
-  //     sprintf(f, "%d.ppm", i);
-  //     stat(f, stat_buffer);
-  //     p = calloc((100), sizeof(char));
-  //     tempfd = open(f, O_RDONLY);
-  //     printf("%d\n", i);
-  //     while(read(tempfd, p, 100)){
-  //       write(fd, p, 100);
-  //       // stat_buffer->st_size
-  //     }
-  //     free(p);
-  //   }
-  //   printf("done\n");
-  // }
+  else{
+    while(wait(NULL) > 0);
+    printf("combining...\n");
+    char f[16];
+
+    int tempfd = -1;
+    // struct stat * stat_buffer;
+    // char * buff;
+    // char * p;
+    // char tmp[2];
+    char tmp[13] = "";
+    for (int i = 0; i < num_child; i++){
+      printf("%d\n", i);
+      sprintf(f, "%d.ppm", i);
+      // stat(f, stat_buffer);
+      tempfd = open(f, O_RDONLY);
+      // printf("%d\n", i);
+      while(read(tempfd, tmp, 13)){
+        // write(fd, tmp, 1);
+        // write(fd, " ", 1);
+        write(fd, tmp, 13);
+      }
+    }
+    printf("done\n");
+  }
 }
 
 
