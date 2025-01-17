@@ -19,7 +19,7 @@ int escape(long double x, long double y){
   long double nX = x;
   long double nY = y;
   int i = 0;
-  while(i < 2500){
+  while(i < 500){
     // if (fabs(x) > 2 || fabs(y) > 2){
     //   return i;
     // }
@@ -61,7 +61,7 @@ int main(){
   int fd = open("render.ppm", O_WRONLY| O_TRUNC | O_CREAT, 0644);
   long double x = -2.0; long double y = -1.5;
   // int pixels = 900;
-  int pixels = 900;
+  int pixels = 2000;
   int n = -2;
   char buff[32] = "";
   sprintf(buff, "P3 %d %d 255\n", pixels, pixels);
@@ -109,15 +109,17 @@ int main(){
     for (int i = start; i < end; i++){
       // y += 3.0/pixels;
       // printf("%Lf\n", y);
-      y = -1.5 + i * 3.0/pixels;
+      // y = -1.5 + i * 3.0/pixels;
+      y += 3.0/pixels;
       x = -2.0;
       for (int j = 0; j < pixels; j++){
         if (i == end - 1 && j == pixels - 1 && id == num_child - 1){
           // printf("%d, %d\n", i, j);
           break;
         }
+        x += 3.0/pixels;
         if ((n = escape(x, y)) >= 0){
-          write(fd, "255 255 255 ", 13);
+          write(fd, "255 255 255 ", 12);
           // write(fd, "1 ", 3);
           // write(fd, "1", 2);
         }
@@ -125,20 +127,19 @@ int main(){
           // write(fd, "0", 2);
           // write(fd, "0 ", 3);
           // write(fd, "0 0 0 ", 7);
-          write(fd, "000 000 000 ", 13);
+          write(fd, "000 000 000 ", 12);
         }
-        x += 3.0/pixels;
       }
     }
     if (id == num_child - 1){
       y += 3.0/pixels;
       if ((n = escape(x, y)) >= 0){
-        write(fd, "255 255 255", 12);
+        write(fd, "255 255 255", 11);
         // write(fd, "1", 2);
       }
       else{
         // write(fd, "0", 2);
-        write(fd, "000 000 000", 12);
+        write(fd, "000 000 000", 11);
       }
     }
   }
@@ -159,10 +160,10 @@ int main(){
       // stat(f, stat_buffer);
       tempfd = open(f, O_RDONLY);
       // printf("%d\n", i);
-      while(read(tempfd, tmp, 13)){
+      while(read(tempfd, tmp, 12)){
         // write(fd, tmp, 1);
         // write(fd, " ", 1);
-        write(fd, tmp, 13);
+        write(fd, tmp, 12);
       }
     }
     printf("done\n");
